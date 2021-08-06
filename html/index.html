@@ -1,0 +1,104 @@
+<html>
+    <head>
+        <title>POSシステム</title>
+        <link rel="stylesheet" href="./style.css">
+    </head>
+    <body>
+        <h2>POSシステム</h2>
+        <p>商品コードを入力してください</p>
+        <div class="input_order_wrapper">
+            <input id="input_order" type="text" name="input_order" placeholder="商品コード">
+            <input id="search_button" class="button" type="button" name="submit" value="検索"><br>
+        </div>
+        <div id="search_result" name="text">検索された商品:</div>
+            <p>個数を入力してください</p>
+            <input id="input_count" type="text" name="word" placeholder="個数"><br>
+            <input id="add_button" class="button" type="button" name="add" value="登録"><br>
+            <p>削除したい商品コードを入力してください</p>
+        <div class="input_order_wrapper">
+            <input id="delete_input_order" type="text" name="delete_input_order" placeholder="商品コード">
+            <input id="delete_button" class="button" type="button" name="submit" value="削除"><br>
+        </div>
+        <textarea id="add_result" name="text" ></textarea><br>
+        <div id="output_total_money" name="text">合計金額:</div>
+        <div>
+            <p>お支払い金額を入力してください</p>
+            <input id="input_deposite" type="text" name="deposite" placeholder="お預かり">
+            <input id="check_button" type="button" name="check" value="お会計">
+        <div>
+        <div>お会計情報</div>
+        <textarea id="output_exchange" name="text"></textarea><br>
+
+        <script type="text/javascript" src="./eel.js"></script>
+        <script>
+            var search_button = document.getElementById("search_button");
+            var input_order = document.getElementById("input_order");
+            search_button.addEventListener('click', () => {
+                if (input_order.value == ""){
+                    alert("商品コードを入力してください");
+                }else{
+                    eel.view_item_data(input_order.value);
+                }
+            })
+
+            var input_count = document.getElementById("input_count");
+            var add_button = document.getElementById("add_button");
+            add_button.addEventListener('click', () => {
+                if (input_count.value == "" && input_order.value ==""){
+                    alert("個数と商品コードを入力してください");
+                } else if(input_count.value == "") {
+                    alert("個数を入力してください");
+                } else if(input_order.value == "") {
+                    alert("商品コードを入力してください");
+                } else{
+                    eel.view_item_order_and_total_money(input_order.value,input_count.value);
+                }
+            })
+
+            var input_deposite = document.getElementById("input_deposite");
+            var check_button = document.getElementById("check_button");
+            check_button.addEventListener('click', () => {
+                if (input_deposite.value == ""){
+                    alert("お預かり金額を入力してください");
+                } else{
+                    eel.accounting_money(input_deposite.value);
+                }
+            })
+
+            var delete_input_order = document.getElementById("delete_input_order");
+            var delete_button = document.getElementById("delete_button");
+            delete_button.addEventListener('click', () => {
+                if (delete_input_order.value == ""){
+                    alert("削除したい商品コードを入力してください");
+                } else{
+                    eel.delete_item(delete_input_order.value);
+                }
+            })
+
+            eel.expose(show_item_data)
+            function show_item_data(data){
+                search_result.innerHTML = data;
+            }
+
+            eel.expose(blank_order_js)
+            function blank_order_js(){
+                add_result.value = "";
+            }
+
+            eel.expose(add_order_js)
+            function add_order_js(order){
+                add_result.value = add_result.value + order + "\n";
+            }
+
+            eel.expose(total_money_js)
+            function total_money_js(total_money){
+                output_total_money.innerHTML = total_money;
+            }
+
+            eel.expose(output_receipt_js)
+            function output_receipt_js(text){
+                output_exchange.value = output_exchange.value + text + "\n";
+            }
+        </script>
+    </body>
+</html>

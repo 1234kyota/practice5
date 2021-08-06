@@ -1,0 +1,27 @@
+p {
+    margin: 5px 0;
+    font-weight: bold;
+}
+#add_button{
+    margin: 5px 0;
+}
+#input_order,#delete_input_order{
+    height: 100%;
+}
+.input_order_wrapper{
+    height:25px;
+}
+div{
+    margin: 10px 0;
+}
+input{
+    height: 25px;
+}
+textarea{
+    height:150px;
+    margin-top: 10px;
+    width: 153px;
+}
+#input_count{
+    margin: 10px 0 5px 0px;
+}
